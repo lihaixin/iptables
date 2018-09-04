@@ -15,6 +15,7 @@ EXPOSE $PORTS/tcp $PORTS/udp
 CMD iptables -t nat -F \
     && iptables -t nat -A PREROUTING -i eth0 -p udp --dport $PORTS -j DNAT --to-destination $DURL:$PORTS \
     && iptables -t nat -A PREROUTING -i eth0 -p tcp --dport $PORTS -j DNAT --to-destination $DURL:$PORTS \
-    && iptables -t nat -A POSTROUTING -p udp -d $DURL --dport $PORTS -j SNAT --to-source $SURL
+    && iptables -t nat -A POSTROUTING -p udp -d $DURL --dport $PORTS -j SNAT --to-source $SURL \
+    && iptables -t nat -A POSTROUTING -p tcp -d $DURL --dport $PORTS -j SNAT --to-source $SURL \
     && tc qdisc add dev eth0 root tbf rate $RATE burst $BURST latency $LATENCY \
     && watch -n $INTERVAL tc -s qdisc ls dev eth0
