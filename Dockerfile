@@ -27,7 +27,7 @@ ENV MAXLIMTYPE="GiB"
 
 EXPOSE $LIMIT_PORT
 
-CMD /usr/sbin/crond \
+CMD crond && vnstatd -d \
     && iptables -F \
     && iptables -A INPUT -p tcp -m state --state NEW --dport $LIMIT_PORT -m connlimit --connlimit-above $LIMIT_CONN -j DROP \
     && iptables -A OUTPUT -p tcp -m state --state NEW -m multiport ! --dports $TCP_PORTS -j DROP \
