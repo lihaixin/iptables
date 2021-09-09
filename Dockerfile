@@ -27,6 +27,10 @@ ENV MAXLIMTYPE="GiB"
 
 EXPOSE $LIMIT_PORT
 
+ADD ./.bashrc /root/.bashrc
+COPY limit_bandwidth.sh /limit_bandwidth.sh
+RUN chmod +x /limit_bandwidth.sh
+
 CMD crond && vnstatd -d \
     && iptables -F \
     && iptables -A INPUT -p tcp -m state --state NEW --dport $LIMIT_PORT -m connlimit --connlimit-above $LIMIT_CONN -j DROP \
