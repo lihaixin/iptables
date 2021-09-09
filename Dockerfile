@@ -4,7 +4,7 @@
 
 FROM alpine
 
-RUN apk add -U iproute2 tini vnstat \
+RUN apk add -U --no-cache iproute2 tini vnstat bash \
   && ln -s /usr/lib/tc /lib/tc \
   && sed -i '/UseLogging/s/2/0/' /etc/vnstat.conf \
   && sed -i '/RateUnit/s/1/0/' /etc/vnstat.conf \
