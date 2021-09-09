@@ -4,7 +4,7 @@
 
 FROM alpine
 
-RUN apk add -U --no-cache iproute2 tini vnstat bash \
+RUN apk add -U --no-cache iproute2 tini vnstat bash curl figlet \
   && ln -s /usr/lib/tc /lib/tc \
   && sed -i '/UseLogging/s/2/0/' /etc/vnstat.conf \
   && sed -i '/RateUnit/s/1/0/' /etc/vnstat.conf \
@@ -12,7 +12,7 @@ RUN apk add -U --no-cache iproute2 tini vnstat bash \
   && chown root:cron /var/spool/cron/crontabs/root \
   && chmod 600 /var/spool/cron/crontabs/root
 
-ENV LIMIT_PORT 8388
+ENV LIMIT_PORT 1080
 ENV LIMIT_CONN 5
 ENV TCP_PORTS 80,443
 ENV UDP_PORTS 53
